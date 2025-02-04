@@ -6,6 +6,7 @@ namespace LugarAPI.Data
     public class PSGCContext : DbContext
     {
         public DbSet<Region> Regions { get; set; }
+        public DbSet<Province> Provinces { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -18,6 +19,8 @@ namespace LugarAPI.Data
             {
                 r.HasNoKey();
             });
+
+            modelBuilder.Entity<Province>(r => r.HasNoKey()); ;
         }
     }
 }

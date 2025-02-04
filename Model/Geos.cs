@@ -6,4 +6,7 @@ namespace LugarAPI.Model
     public class Region : Geo
     {
     }
+
+    [Table("PROVINCES")]
+    public class Province : Geo { }
 }
