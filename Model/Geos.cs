@@ -18,4 +18,7 @@ namespace LugarAPI.Model
 
     [Table("BARANGAYS")]
     public class Barangay : Geo { }
+
+    [Table("DISTRICTS")]
+    public class Districts : Geo { }
 }

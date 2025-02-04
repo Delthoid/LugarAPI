@@ -10,6 +10,7 @@ namespace LugarAPI.Data
         public DbSet<City> Cities { get; set; }
         public DbSet<Municipality> Municipalities { get; set; }
         public DbSet<Barangay> Barangays { get; set; }
+        public DbSet<Districts> Districts { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -23,6 +24,7 @@ namespace LugarAPI.Data
             modelBuilder.Entity<City>(r => r.HasNoKey());
             modelBuilder.Entity<Municipality>(r => r.HasNoKey());
             modelBuilder.Entity<Barangay>(r => r.HasNoKey());
+            modelBuilder.Entity<Districts>(r => r.HasNoKey());
         }
     }
 }
