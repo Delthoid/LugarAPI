@@ -1,10 +1,12 @@
 ﻿using LugarAPI.Model;
 using LugarAPI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Newtonsoft.Json;
 
 namespace LugarAPI.Controllers
 {
+    [EnableRateLimiting("FixedPolicy")]
     [ApiController]
     [Route("api/[controller]")]
     public class RegionController : Controller

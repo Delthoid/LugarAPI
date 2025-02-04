@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace LugarAPI.Controllers
 {
+    [EnableRateLimiting("FixedPolicy")]
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
