@@ -9,4 +9,10 @@ namespace LugarAPI.Model
 
     [Table("PROVINCES")]
     public class Province : Geo { }
+
+    [Table("CITIES")]
+    public class City : Geo { }
+
+    [Table("MUNICIPALITIES")]
+    public class Municipality : Geo { }
 }

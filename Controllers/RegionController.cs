@@ -37,7 +37,7 @@ namespace LugarAPI.Controllers
         {
             if (page < 1) page = 1;
 
-            var regions = _service.GetProvinces(page, limit, code);
+            var regions = _service.GetProvincesByRegionCode(page, limit, code);
             var result = new Result<Province>()
             {
                 Message = regions == null ? "Code not found" : "Get Provinces by Region",
