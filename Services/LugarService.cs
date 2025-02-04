@@ -1,9 +1,11 @@
 ﻿using LugarAPI.Data;
 using LugarAPI.Model;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.InteropServices.Marshalling;
 
 namespace LugarAPI.Services
 {
+    //TODO: Add search query
     public class LugarService
     {
         private readonly PSGCContext _context;
@@ -53,9 +55,10 @@ namespace LugarAPI.Services
         #endregion
 
         #region Provinces
-        public List<Province> GetProvinces(int page, int limit)
+        public List<Province> GetProvinces(int page, int limit, string query)
         {
             var result = _context.Provinces
+                .Where(c => string.IsNullOrEmpty(query) ? true : c.Name.ToLower().Contains(query.ToLower()))
                 .Skip((page - 1) * limit)
                 .Take(limit)
                 .ToList();
@@ -127,6 +130,37 @@ namespace LugarAPI.Services
                 .Skip((page - 1) * limit)
                 .Take(limit)
                 .ToList();
+            return result;
+        }
+        #endregion
+
+        #region Cities
+        public List<City> GetCities(int page, int limit, string query = "")
+        {
+            var result = _context.Cities
+                .Where(c => string.IsNullOrEmpty(query) ? true : c.Name.ToLower().Contains(query.ToLower()))
+                .Skip((page - 1) * limit)
+                .Take(limit)
+                .ToList();
+            return result;
+        }
+
+        public List<Barangay>? GetBarangaysByCityCode(int page, int limit, int code)
+        {
+            if (code <= 0) return null;
+
+            var region = _context.Cities
+                .Where(r => r.Code == code)
+                .SingleOrDefault();
+
+            if (region == null) return null;
+            var cityCode = code.ToString().Substring(0, 7);
+            var result = _context.Barangays
+                .Where(b => b.Code.ToString().Substring(0, 7) == cityCode)
+                .Skip((page - 1) * limit)
+                .Take(limit)
+                .ToList();
+
             return result;
         }
         #endregion
