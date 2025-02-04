@@ -21,7 +21,7 @@ namespace LugarAPI.Controllers
         {
             if (page < 1) page = 1;
 
-            var regions = _service.GetRegions(page, limit);
+            var regions = _service.GetRegions(page, limit, query);
             var result = new Result<Region>()
             {
                 Message = "Get Regions",

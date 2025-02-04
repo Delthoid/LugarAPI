@@ -1,6 +1,7 @@
 ﻿using LugarAPI.Data;
 using LugarAPI.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using System.Runtime.InteropServices.Marshalling;
 
 namespace LugarAPI.Services
@@ -17,9 +18,10 @@ namespace LugarAPI.Services
 
         #region Regions
 
-        public List<Region> GetRegions(int page, int limit)
+        public List<Region> GetRegions(int page, int limit, string query)
         {
             var result =  _context.Regions
+                .Where(c => string.IsNullOrEmpty(query) ? true : c.Name.ToLower().Contains(query.ToLower()))
                 .Skip((page - 1) * limit)
                 .Take(limit)
                 .ToList();
@@ -157,6 +159,37 @@ namespace LugarAPI.Services
             var cityCode = code.ToString().Substring(0, 7);
             var result = _context.Barangays
                 .Where(b => b.Code.ToString().Substring(0, 7) == cityCode)
+                .Skip((page - 1) * limit)
+                .Take(limit)
+                .ToList();
+
+            return result;
+        }
+        #endregion
+
+        #region Municipalities
+        public List<Municipality> GetMunicipalities(int page, int limit, string query = "")
+        {
+            var result = _context.Municipalities
+                .Where(m => string.IsNullOrEmpty(query) ? true : m.Name.ToLower().Contains(query.ToLower()))
+                .Skip((page - 1) * limit)
+                .Take(limit)
+                .ToList();
+            return result;
+        }
+
+        public List<Barangay>? GetBarangaysByMunicipalityCode(int page, int limit, int code)
+        {
+            if (code <= 0) return null;
+
+            var municipality = _context.Municipalities
+                .Where(r => r.Code == code)
+                .SingleOrDefault();
+
+            if (municipality == null) return null;
+            var municipalityCode = code.ToString().Substring(0, 7);
+            var result = _context.Barangays
+                .Where(b => b.Code.ToString().Substring(0, 7) == municipalityCode)
                 .Skip((page - 1) * limit)
                 .Take(limit)
                 .ToList();
