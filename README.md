@@ -1,6 +1,6 @@
 # LugarAPI  
 
-LugarAPI is a RESTful API that provides structured location data for the Philippines, including **regions, provinces, cities/municipalities, and barangays**.  
+LugarAPI is a RESTful API that provides location data for the Philippines, including **regions, provinces, cities/municipalities, and barangays**.  
 
 This API is based on the **Philippine Standard Geographic Code (PSGC)** dataset released by the **Philippine Statistics Authority (PSA)**. The data has been extracted, processed, and stored in **SQL Server** for easy access.  
 
