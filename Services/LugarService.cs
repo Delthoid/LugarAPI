@@ -209,5 +209,17 @@ namespace LugarAPI.Services
             return result;
         }
         #endregion
+
+        #region Barangays
+        public List<Barangay> GetBarangays(int page, int limit, string query = "")
+        {
+            var result = _context.Barangays
+                .Where(m => string.IsNullOrEmpty(query) ? true : m.Name.ToLower().Contains(query.ToLower()))
+                .Skip((page - 1) * limit)
+                .Take(limit)
+                .ToList();
+            return result;
+        }
+        #endregion
     }
 }
