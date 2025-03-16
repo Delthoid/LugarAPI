@@ -33,7 +33,7 @@ namespace LugarAPI.Controllers
             return result;
         }
 
-        [HttpGet("Barangays")]
+        [HttpGet("Barangay")]
         public Result<Barangay> GetBarangays([FromQuery] int page = 1, [FromQuery] int limit = 100, [FromQuery] int code = 0)
         {
             if (page < 1) page = 1;

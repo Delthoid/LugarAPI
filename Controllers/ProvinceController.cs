@@ -50,16 +50,33 @@ namespace LugarAPI.Controllers
         }
 
         [HttpGet("Municipalities")]
-        public Result<Municipality> GetMunicipalities([FromQuery] int page = 1, [FromQuery] int limit = 100, [FromQuery] int code = 0)
+        public Result<Municipality> GetMunicipalities([FromQuery] int page = 1, [FromQuery] int limit = 100, [FromQuery] int code = 0, bool includeCities = false)
         {
             if (page < 1) page = 1;
 
-            var cities = _service.GetMunicipalitiesByProvince(page, limit, code);
+            var municipalities = _service.GetMunicipalitiesByProvince(page, limit, code);
+
+            if (includeCities)
+            {
+                var cities = GetCities(page, limit, code);
+                if (cities.Data.Any())
+                {
+                    foreach (var city in cities.Data)
+                    {
+                        municipalities?.Add(new Municipality()
+                        {
+                            Code = city.Code,
+                            Name = city.Name,
+                        });
+                    }
+                }
+            }
+
             var result = new Result<Municipality>()
             {
-                Message = cities == null ? "Code not found" : "Get Cities by Province Code",
-                Total = cities == null ? 0 : cities.Count,
-                Data = cities ?? [],
+                Message = municipalities == null ? "Code not found" : "Get Cities by Province Code",
+                Total = municipalities == null ? 0 : municipalities.Count,
+                Data = municipalities?.OrderBy(a => a.Name)?.ToList() ?? [],
             };
 
             return result;
