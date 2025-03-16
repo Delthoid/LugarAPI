@@ -67,6 +67,7 @@ namespace LugarAPI.Controllers
                         {
                             Code = city.Code,
                             Name = city.Name,
+                            GeoLevel = "City"
                         });
                     }
                 }
